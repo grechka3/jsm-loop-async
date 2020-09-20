@@ -1,33 +1,3 @@
-/*
-import * as loopAsync from "./loopAsync.mjs"
-
-const foo = async function ()
-{
-  try
-  {
-    await xx.timeoutAsync(100)
-    console.log(xx.tssNow())
-  }
-  catch (e)
-  {
-
-  }
-}
-
-let tt = loopAsync.interval(foo, 500, true, false)
-tt.run()
-tt.pause()
-tt.resume()
-
-
- */
-
-
-/**
- *  foo должно быть async function
- *  внутри foo нельзя вызывать методы Looper типа pause/resume etc
- */
-
 
 class Looper
 {
@@ -72,10 +42,7 @@ class Looper
 
     resume()
     {
-        if (this.deactivated)
-        {
-            this.deactivated = false
-        }
+        this.deactivated = false
         return this
     }
 
