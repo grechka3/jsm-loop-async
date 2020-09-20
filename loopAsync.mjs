@@ -23,12 +23,18 @@ tt.resume()
  */
 
 
+/**
+ *  foo должно быть async function
+ *  внутри foo нельзя вызывать методы Looper типа pause/resume etc
+ */
+
+
 class Looper
 {
     constructor(foo, interval, opts)
     {
         this.immediate = opts.immediate || false
-        this.deactivate = false
+        this.deactivated = false
         this.interval = interval
         this.foo = foo
         this.id = parseInt(Math.random() * 1000)
@@ -60,25 +66,24 @@ class Looper
 
     pause()
     {
-        this.deactivate = true
+        this.deactivated = true
         return this
     }
 
     resume()
     {
-        if (this.deactivate)
+        if (this.deactivated)
         {
-            this.deactivate = false
+            this.deactivated = false
         }
-        this.looper()
         return this
     }
 
     run()
     {
-        if (this.deactivate)
+        if (this.deactivated)
         {
-            this.deactivate = false
+            this.deactivated = false
             this.looper()
         }
         return this
@@ -90,7 +95,7 @@ class Looper
         {
             await this.timeoutAsync(this.interval)
         }
-        while (!this.deactivate)
+        while (!this.deactivated)
         {
             try
             {
@@ -110,7 +115,7 @@ class Looper
             await this.timeoutAsync(this.interval)
         }
         let t0 = Date.now(), t1
-        while (!this.deactivate)
+        while (!this.deactivated)
         {
             t0 = Date.now()
             try
