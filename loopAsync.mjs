@@ -140,3 +140,8 @@ export const interval = (foo, interval, immediate = false, autoRun = true) =>
     }
     return new Looper(foo, interval, opts)
 }
+
+export default {
+    timeout,
+    interval
+}
